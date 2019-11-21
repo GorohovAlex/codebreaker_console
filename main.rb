@@ -1,6 +1,8 @@
 require_relative 'dependencies.rb'
+require 'codebreaker_gem'
 
-I18n.load_path = Dir[File.join('config', 'locales', '*.{rb,yml}')]
-I18n.locale = :en
+# system('clear')
+# puts I18n.t('hello')
+# x = gets.to_i
 
-puts I18n.t('hello')
+puts CodebreakerGem::GeneratorNumbers.generate()
