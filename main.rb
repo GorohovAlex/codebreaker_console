@@ -1,8 +1,13 @@
 require_relative 'dependencies.rb'
-require 'codebreaker_gem'
 
-# system('clear')
-# puts I18n.t('hello')
-# x = gets.to_i
+system('clear')
+# game_codebreaker = CodeBreaker.new
+# game_codebreaker.welcome
 
-puts CodebreakerGem::GeneratorNumbers.generate()
+codebreaker_gem = CodebreakerGem.new
+
+# puts codebreaker_gem.generate_number.inspect
+codebreaker_gem.user_code = '5643'
+puts "User code: #{codebreaker_gem.user_code.join}"
+
+puts "compare_codes: #{codebreaker_gem.compare_codes}"
