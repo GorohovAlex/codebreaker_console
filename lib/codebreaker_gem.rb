@@ -1,11 +1,21 @@
+require_relative 'difficulty.rb'
+
 class CodebreakerGem
-  attr_reader :user_code
+  attr_reader :user_code, :username, :difficulty, :difficulty_change
 
   def initialize
     @secret_code = generate_number
     @secret_code_positions = get_code_positions(@secret_code)
     @user_code = Array.new(4, nil)
-    puts "Secret code: #{@secret_code.join}"
+    @username = ''
+    init_difficulty
+  end
+
+  def init_difficulty
+    @difficulty = []
+    @difficulty << Difficulty.new(name: 'Easy', attempts: 15, hints: 2)
+    @difficulty << Difficulty.new(name: 'Medium', attempts: 10, hints: 1)
+    @difficulty << Difficulty.new(name: 'Hell', attempts: 5, hints: 1)
   end
 
   def generate_number(min_value = 0, max_value = 6, length = 4)
@@ -17,9 +27,23 @@ class CodebreakerGem
     @user_code_positions = get_code_positions(@user_code)
   end
 
+  def difficulty_change=(difficulty_change)
+    @difficulty_change = @difficulty.select { |value| value.name == difficulty_change }.first
+  end
+
   def compare_codes
+    # puts "Secret code: #{@secret_code.join}"
     crossing_values = @secret_code & @user_code
     crossing_values.each_with_object([]) { |value, cross_result| cross_result << get_cross_value(value) }.flatten
+  end
+
+  def start_game
+    game = []
+    game[:attempts] = @attempts
+  end
+
+  def registration(username_new)
+    @username = username_new
   end
 
   private
@@ -34,8 +58,8 @@ class CodebreakerGem
   end
 
   def guess_value(value)
-    user_code_positions = @user_code_positions
-    secret_code_positions = @secret_code_positions
+    user_code_positions = @user_code_positions.dup
+    secret_code_positions = @secret_code_positions.dup
 
     crossing_positions = user_code_positions[value] & secret_code_positions[value]
     secret_code_positions[value] -= crossing_positions
