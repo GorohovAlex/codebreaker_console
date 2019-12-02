@@ -3,7 +3,7 @@ en:
   menu_message: "choose what you want to do [start, rules, stats, exit]: "
   fail_menu_message: "You have passed unexpected command. Please choose one from listed commands\n\n"
   goodbye_message: "\n\nGoodbye, we will be cry if you do not return again to us\n\n"
-  rules_message: "\nHere writed rules this game\n\n"
+  rules_message: "Here writed rules this game\n\n"
   game_registration: 'Game registration'
   input_username: 'Input your username: '
   difficulty_change: 'Choose difficulty level [%s]: '

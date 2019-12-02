@@ -1,4 +1,5 @@
 require_relative 'difficulty.rb'
+require_relative 'game_stage.rb'
 
 class CodebreakerGem
   attr_reader :user_code, :username, :difficulty, :difficulty_change
@@ -32,14 +33,19 @@ class CodebreakerGem
   end
 
   def compare_codes
-    # puts "Secret code: #{@secret_code.join}"
+    puts "Secret code: #{@secret_code.join}"
     crossing_values = @secret_code & @user_code
     crossing_values.each_with_object([]) { |value, cross_result| cross_result << get_cross_value(value) }.flatten
   end
 
-  def start_game
-    game = []
-    game[:attempts] = @attempts
+  def game_start
+    @game_stage = GameStage.new(user_code.length, @difficulty_change.attempts)
+    @game_stage
+  end
+
+  def game_step
+    @game_stage.step(compare_codes)
+    @game_stage
   end
 
   def registration(username_new)

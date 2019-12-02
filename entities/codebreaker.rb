@@ -31,6 +31,7 @@ class CodeBreaker
     when :start then start
     when :start_game then start_game
     when :menu_select then menu_select
+    when :rules then rules
     end
   end
 
@@ -57,21 +58,35 @@ class CodeBreaker
   end
 
   def start
-    @codebreaker_game.username.empty? ? registration : start_game
+    @codebreaker_game.username.empty? ? registration : game_start
   end
 
-  def start_game
-    game_stage = @codebreaker_game.start_game
+  def game_start
+    game_stage = @codebreaker_game.game_start
+    puts "Attempts count: #{game_stage.attempts}"
 
-    puts "Attempts count: #{game_stage[:attempts]}"
-
-    attempts.times do |number|
-      print "[%d/%d]: " % [number, game_stage[:attempts]]
+    until game_stage.endgame
+      print '[%d/%d]: ' % [game_stage.step_number, game_stage.attempts]
       @codebreaker_game.user_code = gets.chomp
-      puts "compare_codes: #{@codebreaker_game.compare_codes}"
+      game_stage = @codebreaker_game.game_step
+      puts "compare_result: #{compare_result(game_stage.compare_result)}"
     end
 
-    gets
+    game_end(game_stage.win)
+  end
+
+  def compare_result(result)
+    result.map { |value| value ? SYMBOL_GUESS : SYMBOL_NOT_GUESS }.join
+  end
+
+  def game_end(win)
+    if win
+      puts('WIN')
+    else
+      puts('LOSE')
+    end
+
+    set_state(:menu_select)
   end
 
   def registration
@@ -86,6 +101,6 @@ class CodeBreaker
   def difficulty_change
     print I18n.t('difficulty_change') % [@codebreaker_game.difficulty.map(&:name).join(', ')]
     @codebreaker_game.difficulty_change = gets.chomp
-    start_game
+    game_start
   end
 end
