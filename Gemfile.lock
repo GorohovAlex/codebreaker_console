@@ -46,6 +46,8 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     unicode-display_width (1.6.0)
 
 PLATFORMS
@@ -58,6 +60,7 @@ DEPENDENCIES
   rspec (~> 3.9.0)
   rubocop (~> 0.76.0)
   simplecov
+  terminal-table (~> 1.8)
 
 BUNDLED WITH
    2.0.2

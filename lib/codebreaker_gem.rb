@@ -2,12 +2,13 @@ require_relative 'difficulty.rb'
 require_relative 'game_stage.rb'
 
 class CodebreakerGem
-  attr_reader :user_code, :username, :difficulty, :difficulty_change
+  attr_reader :user_code, :username, :difficulty, :difficulty_change, :game_stage
+  CODE_LENGTH = 4
 
   def initialize
     @secret_code = generate_number
     @secret_code_positions = get_code_positions(@secret_code)
-    @user_code = Array.new(4, nil)
+    @user_code = Array.new(CODE_LENGTH, nil)
     @username = ''
     init_difficulty
   end
@@ -19,17 +20,20 @@ class CodebreakerGem
     @difficulty << Difficulty.new(name: 'Hell', attempts: 5, hints: 1)
   end
 
-  def generate_number(min_value = 0, max_value = 6, length = 4)
+  def generate_number(min_value = 0, max_value = 6, length = CODE_LENGTH)
     Array.new(length) { rand(min_value..max_value) }
   end
 
   def user_code=(new_user_code)
+    raise LengthError, new_user_code if new_user_code.length != CODE_LENGTH
+
     @user_code = new_user_code.split('').map(&:to_i)
     @user_code_positions = get_code_positions(@user_code)
   end
 
   def difficulty_change=(difficulty_change)
     @difficulty_change = @difficulty.select { |value| value.name == difficulty_change }.first
+    @hint_code = @secret_code.sample(@difficulty_change.hints)
   end
 
   def compare_codes
@@ -50,6 +54,11 @@ class CodebreakerGem
 
   def registration(username_new)
     @username = username_new
+  end
+
+  def get_hint
+    @game_stage.hint_used += 1
+    @hint_code.shift unless @hint_code.empty?
   end
 
   private

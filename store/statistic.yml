@@ -1,0 +1,17 @@
+---
+- !ruby/object:Statistic
+  rating: 0
+  name: smile
+  difficulty: Easy
+  attempts_total: 15
+  attempts_used: 3
+  hints_total: 2
+  hints_used: 0
+- !ruby/object:Statistic
+  rating: 0
+  name: 12345678912345678912
+  difficulty: Easy
+  attempts_total: 15
+  attempts_used: 3
+  hints_total: 2
+  hints_used: 0
