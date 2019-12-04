@@ -1,24 +1,29 @@
 class CodeBreaker
   def initialize
-    @state = :welcome
+    @state = :menu_select
     @codebreaker_game = CodebreakerGem.new
+  end
+
+  def input
+    value = gets.chomp
+    case value
+    when 'exit'
+      goodbye
+    end
+    value
   end
 
   def run
     welcome
-    loop do
-      set_state(@state)
-    end
-    goodbye
+    set_state(@state)
   end
 
   def menu_select
     print I18n.t('menu_message').light_blue
-    item = gets.chomp
+    item = input
     case item
     when 'start' then set_state(:start)
     when 'start_game' then set_state(:start_game)
-    when 'exit' then set_state(:exit)
     when 'rules' then set_state(:rules)
     when 'stats' then set_state(:stats)
     else
@@ -39,10 +44,12 @@ class CodeBreaker
 
   def statistic_show
     system('clear')
-    statistic = YamlFile.load('store/statistic.yml')
+    statistic = YamlFile
+                .load('store/statistic.yml')
+                .sort_by { |stat| [stat.attempts_total + stat.hints_total, stat.attempts_used, stat.hints_used] }
 
-    rows = statistic.map do |value|
-      [0, value.name, value.difficulty, value.attempts_total,
+    rows = statistic.each_with_index.map do |value, index|
+      [index + 1, value.name, value.difficulty, value.attempts_total,
        value.attempts_used, value.hints_total, value.hints_used]
     end
 
@@ -62,11 +69,12 @@ class CodeBreaker
   def welcome
     system('clear')
     puts I18n.t('introduction_message').light_white
-    set_state(:menu_select)
+    # set_state(:menu_select)
   end
 
   def goodbye
     print I18n.t('goodbye_message')
+    exit
   end
 
   def rules
@@ -85,25 +93,32 @@ class CodeBreaker
     puts "Enter your answer or 'hint' to get a hint"
 
     until game_stage.endgame
-      print format('[%d/%d]: ', game_stage.step_number, game_stage.attempts)
+      begin
+        print format('[%d/%d]: ', game_stage.step_number, game_stage.attempts)
+        answer = input.strip
 
-      answer = gets.chomp
-
-      case answer.strip
-      when 'hint'
-        hint_code = hint
-        if hint_code.nil?
-          puts I18n.t('no_hints')
+        case answer
+        when 'hint'
+          hint_code = hint
+          if hint_code.nil?
+            puts I18n.t('no_hints')
+          else
+            puts format(I18n.t('show_hint'), hint_code)
+          end
         else
-          puts format(I18n.t('show_hint'), hint_code)
+
+          @codebreaker_game.user_code = answer
+          game_stage = @codebreaker_game.game_step
+          puts "compare_result: #{compare_result(game_stage.compare_result)}"
         end
-      else
-        @codebreaker_game.user_code = answer
-        game_stage = @codebreaker_game.game_step
-        puts "compare_result: #{compare_result(game_stage.compare_result)}"
+      rescue LengthError => e
+        puts e.message
+        retry
+      rescue DigitValidationError => e
+        puts e.message
+        retry
       end
     end
-
     game_end(game_stage.win)
   end
 
@@ -118,6 +133,7 @@ class CodeBreaker
   def game_end(win)
     if win
       puts I18n.t('win_message')
+      statistic_save
     else
       puts I18n.t('lose_message')
     end
@@ -126,6 +142,10 @@ class CodeBreaker
   end
 
   def statistic_save
+    print 'Do you want to save the result? [y/n]: '
+    answer = input
+    return unless answer == 'y'
+
     @statistic = YamlFile.load('store/statistic.yml')
     stat = Statistic.new(name: @codebreaker_game.username, difficulty: @codebreaker_game.difficulty_change, game_stage: @codebreaker_game.game_stage)
     @statistic << stat
@@ -136,17 +156,23 @@ class CodeBreaker
     system('clear')
     puts I18n.t('game_registration')
     @codebreaker_game.registration(username_input)
-    @codebreaker_game.difficulty_change = difficulty_change
+
+    begin
+      @codebreaker_game.difficulty_change = difficulty_change
+    rescue NotFoundError => e
+      puts e.message
+      retry
+    end
     game_start
   end
 
   def username_input
     print I18n.t('input_username')
-    gets.chomp
+    input
   end
 
   def difficulty_change
     print format(I18n.t('difficulty_change'), @codebreaker_game.difficulty.map(&:name).join(', '))
-    gets.chomp
+    input
   end
 end

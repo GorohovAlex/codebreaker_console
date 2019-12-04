@@ -2,12 +2,15 @@ require_relative 'difficulty.rb'
 require_relative 'game_stage.rb'
 
 class CodebreakerGem
+  include Validation
+
   attr_reader :user_code, :username, :difficulty, :difficulty_change, :game_stage
   CODE_LENGTH = 4
+  CODE_MIN_VALUE = 0
+  CODE_MAX_VALUE = 6
 
   def initialize
-    @secret_code = generate_number
-    @secret_code_positions = get_code_positions(@secret_code)
+
     @user_code = []
     @username = ''
     init_difficulty
@@ -25,15 +28,18 @@ class CodebreakerGem
   end
 
   def user_code=(new_user_code)
-    raise LengthError, new_user_code if new_user_code.length != CODE_LENGTH
+    raise LengthError, CODE_LENGTH if new_user_code.length != CODE_LENGTH
+    raise DigitValidationError unless new_user_code.split('').all? { |value| valid_number?(value) }
 
     @user_code = new_user_code.split('').map(&:to_i)
+
     @user_code_positions = get_code_positions(@user_code)
   end
 
   def difficulty_change=(difficulty_change)
     @difficulty_change = @difficulty.select { |value| value.name == difficulty_change }.first
-    @hint_code = @secret_code.sample(@difficulty_change.hints)
+    raise NotFoundError, difficulty_change if @difficulty_change.nil?
+    @hint_code = @secret_code.sample(@difficulty_change.hints) unless @secret_code.nil?
   end
 
   def compare_codes
@@ -43,7 +49,9 @@ class CodebreakerGem
   end
 
   def game_start
-    @game_stage = GameStage.new(user_code.length, @difficulty_change.attempts)
+    @secret_code = generate_number
+    @secret_code_positions = get_code_positions(@secret_code)
+    @game_stage = GameStage.new(CODE_LENGTH, @difficulty_change.attempts)
     @game_stage
   end
 
@@ -54,6 +62,12 @@ class CodebreakerGem
 
   def registration(username)
     @username = username
+  end
+
+  def username=(username_new)
+    raise LengthError if username_new.length < 3 || username_new.length > 20
+
+    @username = username_new
   end
 
   def hint_show
