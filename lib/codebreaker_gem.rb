@@ -65,7 +65,8 @@ class CodebreakerGem
   end
 
   def username=(username_new)
-    raise LengthError if username_new.length < 3 || username_new.length > 20
+    raise LengthError, '<3' if username_new.length < 3
+    raise LengthError, '>20' if username_new.length > 20
 
     @username = username_new
   end
