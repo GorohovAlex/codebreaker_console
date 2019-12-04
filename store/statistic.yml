@@ -15,3 +15,11 @@
   attempts_used: 3
   hints_total: 2
   hints_used: 0
+- !ruby/object:Statistic
+  rating: 0
+  name: smile
+  difficulty: Easy
+  attempts_total: 15
+  attempts_used: 4
+  hints_total: 2
+  hints_used: 0

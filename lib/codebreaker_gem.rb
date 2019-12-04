@@ -8,16 +8,16 @@ class CodebreakerGem
   def initialize
     @secret_code = generate_number
     @secret_code_positions = get_code_positions(@secret_code)
-    @user_code = Array.new(CODE_LENGTH, nil)
+    @user_code = []
     @username = ''
     init_difficulty
   end
 
   def init_difficulty
     @difficulty = []
-    @difficulty << Difficulty.new(name: 'Easy', attempts: 15, hints: 2)
-    @difficulty << Difficulty.new(name: 'Medium', attempts: 10, hints: 1)
-    @difficulty << Difficulty.new(name: 'Hell', attempts: 5, hints: 1)
+    @difficulty << Difficulty.new(name: 'Easy', attempts: 15, hints: 2, level: 0)
+    @difficulty << Difficulty.new(name: 'Medium', attempts: 10, hints: 1, level: 1)
+    @difficulty << Difficulty.new(name: 'Hell', attempts: 5, hints: 1, level: 2)
   end
 
   def generate_number(min_value = 0, max_value = 6, length = CODE_LENGTH)
@@ -52,11 +52,11 @@ class CodebreakerGem
     @game_stage
   end
 
-  def registration(username_new)
-    @username = username_new
+  def registration(username)
+    @username = username
   end
 
-  def get_hint
+  def hint_show
     @game_stage.hint_used += 1
     @hint_code.shift unless @hint_code.empty?
   end

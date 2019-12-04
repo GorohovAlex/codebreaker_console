@@ -1,6 +1,6 @@
 en:
   introduction_message: "Welcome to the game @CODEBREAKER\n\n"
-  menu_message: "choose what you want to do [start, rules, stats, exit]: "
+  menu_message: "Choose what you want to do [start, rules, stats, exit]: "
   fail_menu_message: "You have passed unexpected command. Please choose one from listed commands\n\n"
   goodbye_message: "\n\nGoodbye, we will be cry if you do not return again to us\n\n"
   rules_message: |
@@ -31,5 +31,12 @@ en:
   difficulty_easy: 'Easy'
   difficulty_medium: 'Medium'
   difficulty_hell: 'Hell'
-  win_message: 'Congrats!! You win!!'
-  lose_message: 'You lose...' 
+  win_message: "\nCongrats!! You win!!\n"
+  lose_message: "\nYou lose...\n" 
+  rating: 'Rating'
+  name: 'Name'
+  difficulty: 'Difficulty'
+  attempts_total: 'Attempts Total'
+  attempts_used: 'Attempts Used'
+  hints_total: 'Hints Total'
+  hints_used: 'Hints Used'

@@ -1,5 +1,5 @@
 class Statistic
-  attr_reader :name, :difficulty
+  attr_reader :name, :difficulty, :attempts_total, :attempts_used, :hints_total, :hints_used
   def initialize(name:, difficulty:, game_stage:)
     @rating = 0
     @name = name
