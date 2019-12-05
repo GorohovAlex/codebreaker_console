@@ -1,33 +1,7 @@
 ---
-- !ruby/object:Statistic
-  rating: 0
-  name: smile
-  difficulty: Easy
-  attempts_total: 15
-  attempts_used: 4
-  hints_total: 3
-  hints_used: 0
-- !ruby/object:Statistic
-  rating: 0
-  name: 12345678912345678912
-  difficulty: Easy
-  attempts_total: 15
-  attempts_used: 1
-  hints_total: 2
-  hints_used: 0
-- !ruby/object:Statistic
-  rating: 0
-  name: smile
-  difficulty: Easy
-  attempts_total: 15
-  attempts_used: 4
-  hints_total: 2
-  hints_used: 0
-- !ruby/object:Statistic
-  rating: 0
-  name: wolf
-  difficulty: Medium
-  attempts_total: 10
-  attempts_used: 4
-  hints_total: 1
-  hints_used: 0
+- :name: smile
+  :difficulty: Hell
+  :attempts_total: 5
+  :attempts_used: 3
+  :hints_total: 1
+  :hints_used: 0

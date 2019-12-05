@@ -40,3 +40,4 @@ en:
   attempts_used: 'Attempts Used'
   hints_total: 'Hints Total'
   hints_used: 'Hints Used'
+  error_name_length: 'error_name_length'
