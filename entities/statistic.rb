@@ -3,7 +3,7 @@ class Statistic
 
   attr_reader :statistic, :headings
   def initialize
-    @headings = %w[rating name difficulty attempts_total attempts_used hints_total hints_used]
+    @headings = STAT_HEADER_LIST
     @statistic_items = []
   end
 
@@ -11,7 +11,7 @@ class Statistic
     statistic_load
     statistic_sort
     @statistic_items.each_with_index.map do |stat, index|
-      [index + 1, stat[:name], stat[:difficulty], stat[:attempts_total],
+      [index.next, stat[:name], stat[:difficulty], stat[:attempts_total],
        stat[:attempts_used], stat[:hints_total], stat[:hints_used]]
     end
   end
@@ -29,11 +29,11 @@ class Statistic
   private
 
   def statistic_load
-    @statistic_items = YamlFile.load('store/statistic.yml')
+    @statistic_items = YamlFile.load(STAT_FILE_PATH)
   end
 
   def statistic_save
-    YamlFile.save('store/statistic.yml', @statistic_items)
+    YamlFile.save(STAT_FILE_PATH, @statistic_items)
   end
 
   def statistic_sort

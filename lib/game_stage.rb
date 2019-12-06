@@ -1,5 +1,4 @@
 class GameStage
-  # attr_reader step_number: 0, endgame: false
   attr_reader :step_number, :endgame, :attempts, :compare_result, :win
   attr_accessor :hint_used
 

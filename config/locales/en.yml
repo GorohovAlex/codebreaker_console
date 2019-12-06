@@ -41,3 +41,8 @@ en:
   hints_total: 'Hints Total'
   hints_used: 'Hints Used'
   error_name_length: 'error_name_length'
+  statistic_save_question: 'Do you want to save the result? [y/n]: '
+  attempts_count: 'Attempts count: %d'
+  about_hint_message: "Enter your answer or 'hint' to get a hint"
+  step_message: '[%d/%d]: '
+  compare_result: 'compare result: %s'

@@ -5,7 +5,7 @@ class CodebreakerGem
   include Validator
 
   attr_reader :user_code, :difficulty, :game_stage, :difficulty_change
-  attr_accessor :username
+  attr_accessor :username, :secret_code
 
   VALIDE_CODE_LENGTH = 4
   VALIDE_CODE_NUMBERS = (1..6).freeze
@@ -23,14 +23,8 @@ class CodebreakerGem
     @difficulty << Difficulty.new(name: 'Hell', attempts: 5, hints: 1, level: 2)
   end
 
-  def generate_number(min_value: VALIDE_CODE_NUMBERS.min,
-                      max_value: VALIDE_CODE_NUMBERS.max,
-                      length: VALIDE_CODE_LENGTH)
-    Array.new(length) { rand(min_value..max_value) }
-  end
-
   def user_code=(new_user_code)
-    @user_code = new_user_code.split('').map(&:to_i)
+    @user_code = new_user_code
     @user_code_positions = get_code_positions(@user_code)
   end
 
@@ -39,20 +33,8 @@ class CodebreakerGem
     generate_hints
   end
 
-  def generate_hints
-    @hint_code = @secret_code.sample(@difficulty_change.hints) unless @secret_code.nil?
-  end
-
-  def compare_codes
-    # puts "Secret code: #{@secret_code.join}"
-    crossing_values = @secret_code & @user_code
-    crossing_values.each_with_object([]) { |value, cross_result| cross_result << get_cross_value(value) }.flatten
-  end
-
   def game_start
-    @secret_code = generate_number
-    @secret_code_positions = get_code_positions(@secret_code)
-    generate_hints
+    generate_secret_code
     @game_stage = GameStage.new(VALIDE_CODE_LENGTH, @difficulty_change.attempts)
     @game_stage
   end
@@ -74,6 +56,30 @@ class CodebreakerGem
   end
 
   private
+
+  def compare_codes
+    puts "Secret code: #{@secret_code.join}"
+    crossing_values = @secret_code & @user_code
+    crossing_values.each_with_object([]) { |value, cross_result| cross_result << get_cross_value(value) }
+                   .flatten
+                   .sort_by { |item| item ? 0 : 1 }
+  end
+
+  def generate_number(min_value: VALIDE_CODE_NUMBERS.min,
+                      max_value: VALIDE_CODE_NUMBERS.max,
+                      length: VALIDE_CODE_LENGTH)
+    Array.new(length) { rand(min_value..max_value) }
+  end
+
+  def generate_secret_code
+    @secret_code = generate_number
+    @secret_code_positions = get_code_positions(@secret_code)
+    generate_hints
+  end
+
+  def generate_hints
+    @hint_code = @secret_code.nil? ? [] : @secret_code.sample(@difficulty_change.hints)
+  end
 
   def get_cross_value(value)
     guess_position(value) + guess_value(value)

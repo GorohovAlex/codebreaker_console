@@ -1,6 +1,6 @@
 class BaseClass
   include Validator
-  
+
   def valide?
     validate
     @errors.empty?

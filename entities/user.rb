@@ -1,8 +1,6 @@
 class User < BaseClass
   attr_reader :username
 
-  VALIDE_NAME_RANGE = (3..20).freeze
-
   def initialize(username_new)
     @username = username_new
     @errors = []
@@ -11,6 +9,6 @@ class User < BaseClass
   private
 
   def validate
-    @errors << I18n.t('error_name_length') unless validate_length?(@username, VALIDE_NAME_RANGE)
+    @errors << I18n.t('error_name_length') unless validate_length?(@username, USERNAME_LENGTH_RANGE)
   end
 end

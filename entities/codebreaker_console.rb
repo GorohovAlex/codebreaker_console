@@ -1,4 +1,4 @@
-class CodeBreakerConsole < BaseClass
+class CodebreakerConsole < BaseClass
   def initialize
     @state = :menu_select
     @game_console = GameConsole.new
@@ -13,7 +13,8 @@ class CodeBreakerConsole < BaseClass
 
   def menu_select
     print I18n.t('menu_message').light_blue
-    item = input
+    item = CodebreakerConsole.input
+
     case item
     when 'start' then set_state(:start)
     when 'start_game' then set_state(:start_game)
@@ -35,7 +36,7 @@ class CodeBreakerConsole < BaseClass
     end
   end
 
-  def input
+  def self.input
     value = gets.chomp
     goodbye if value == 'exit'
     value
@@ -50,7 +51,7 @@ class CodeBreakerConsole < BaseClass
   end
 
   def statistic_save
-    print 'Do you want to save the result? [y/n]: '
+    print I18n.t('statistic_save_question')
     return unless input == 'y'
 
     @statistic.statistic_add_item(name: @codebreaker_gem.username, difficulty: @codebreaker_gem.difficulty_change,
@@ -110,13 +111,13 @@ class CodeBreakerConsole < BaseClass
 
   def username_input
     print I18n.t('input_username')
-    @user = User.new(input)
+    @user = User.new(CodebreakerConsole.input)
     username_input unless @user.valide?
   end
 
   def difficulty_change
     print format(I18n.t('difficulty_change'), @codebreaker_gem.difficulty.map(&:name).join(', '))
-    @game_console.difficulty_change = input
+    @game_console.difficulty_change = CodebreakerConsole.input
     difficulty_change if @game_console.difficulty_change.nil?
   end
 end
