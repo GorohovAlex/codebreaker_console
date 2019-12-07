@@ -1,6 +1,8 @@
 class CodebreakerConsole < BaseClass
+  CONSOLE_STAGE_LIST = %w[welcome start start_game menu_select rules statistic_show].freeze
+
   def initialize
-    @state = :menu_select
+    @stage = :menu_select
     @game_console = GameConsole.new
     @codebreaker_gem = CodebreakerGem.new
     @statistic = Statistic.new
@@ -8,7 +10,7 @@ class CodebreakerConsole < BaseClass
 
   def run
     welcome
-    set_state(@state)
+    stage_set(@stage)
   end
 
   def menu_select
@@ -16,24 +18,17 @@ class CodebreakerConsole < BaseClass
     item = CodebreakerConsole.input
 
     case item
-    when 'start' then set_state(:start)
-    when 'start_game' then set_state(:start_game)
-    when 'rules' then set_state(:rules)
-    when 'stats' then set_state(:stats)
+    when 'start' then stage_set(:start)
+    when 'start_game' then stage_set(:start_game)
+    when 'rules' then stage_set(:rules)
+    when 'stats' then stage_set(:stats)
     else
       fail_menu_message
     end
   end
 
-  def set_state(state)
-    case state
-    when :welcome then welcome
-    when :start then start
-    when :start_game then start_game
-    when :menu_select then menu_select
-    when :rules then rules
-    when :stats then statistic_show
-    end
+  def stage_set(stage)
+    send(stage) if CONSOLE_STAGE_LIST.include?(stage.to_s)
   end
 
   def self.input
@@ -47,7 +42,7 @@ class CodebreakerConsole < BaseClass
     headings = @statistic.headings.map! { |value| I18n.t(value) }
     rows = @statistic.statistic_get
     puts Terminal::Table.new(headings: headings, rows: rows)
-    set_state(:menu_select)
+    stage_set(:menu_select)
   end
 
   def statistic_save
@@ -97,7 +92,7 @@ class CodebreakerConsole < BaseClass
       puts I18n.t('lose_message')
     end
 
-    set_state(:menu_select)
+    stage_set(:menu_select)
   end
 
   def registration

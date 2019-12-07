@@ -91,15 +91,19 @@ class CodebreakerGem
   end
 
   def guess_value(value)
-    user_code_positions = @user_code_positions.dup
-    secret_code_positions = @secret_code_positions.dup
+    crossing_positions = @user_code_positions[value] & @secret_code_positions[value]
 
-    crossing_positions = user_code_positions[value] & secret_code_positions[value]
-    secret_code_positions[value] -= crossing_positions
-    user_code_positions[value] -= crossing_positions
+    user_code_positions = crossing_code_position(value, @user_code_positions, crossing_positions)
+    secret_code_positions = crossing_code_position(value, @secret_code_positions, crossing_positions)
 
     size_no_cross_code = [secret_code_positions[value].size, user_code_positions[value].size].min
     crossing_positions.empty? && size_no_cross_code.zero? ? [] : Array.new(size_no_cross_code, false)
+  end
+
+  def crossing_code_position(value, code_array, crossing_positions)
+    code_positions = code_array.dup
+    code_positions[value] -= crossing_positions
+    code_positions
   end
 
   def get_code_positions(code_array)
