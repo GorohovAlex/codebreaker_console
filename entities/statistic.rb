@@ -23,7 +23,6 @@ class Statistic
                           attempts_used: game_stage.step_number,
                           hints_total: difficulty.hints,
                           hints_used: game_stage.hint_used }
-    statistic_save
   end
 
   private

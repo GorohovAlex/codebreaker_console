@@ -1,6 +1,6 @@
 en:
   introduction_message: "Welcome to the game @CODEBREAKER\n\n"
-  menu_message: "Choose what you want to do [start, rules, stats, exit]: "
+  menu_message: "Choose what you want to do [%s]: "
   fail_menu_message: "You have passed unexpected command. Please choose one from listed commands\n\n"
   goodbye_message: "\n\nGoodbye, we will be cry if you do not return again to us\n\n"
   rules_message: |
