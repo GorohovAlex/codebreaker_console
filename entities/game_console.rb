@@ -1,15 +1,17 @@
 class GameConsole < BaseClass
-  attr_reader :difficulty_change, :user_code
+  attr_reader :user_code
+attr_accessor :difficulty_change
 
   VALIDE_CODE_LENGTH = 4
   VALIDE_CODE_NUMBERS = (1..6).freeze
 
-  def initialize
-    @game_gem = CodebreakerGem::CodebreakerGem.new
+  def initialize(codebreaker_gem)
+    @game_gem = codebreaker_gem
   end
 
-  def difficulty_change=(difficulty)
-    @difficulty_change = @game_gem.difficulty.detect { |value| value.name == difficulty }
+  def difficulty_select
+    print format(I18n.t('difficulty_change'), @game_gem.difficulty.map(&:name).join(', '))
+    @difficulty_change = CodebreakerConsole.input
     @game_gem.difficulty_change = @difficulty_change
   end
 

@@ -37,6 +37,8 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
+    rubocop-rspec (1.37.0)
+      rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
     ruby_parser (3.14.1)
       sexp_processor (~> 4.9)
@@ -59,6 +61,7 @@ DEPENDENCIES
   i18n (~> 1.7.0)
   rspec (~> 3.9.0)
   rubocop (~> 0.76.0)
+  rubocop-rspec
   simplecov
   terminal-table (~> 1.8)
 

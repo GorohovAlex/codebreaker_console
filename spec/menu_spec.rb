@@ -1,4 +1,4 @@
-describe Menu do
+RSpec.describe Menu do
   before { @menu = Menu.new }
 
   it 'when menu_to_s' do

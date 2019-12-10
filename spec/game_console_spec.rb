@@ -1,5 +1,5 @@
-describe GameConsole do
-  before { @game_console = GameConsole.new }
+RSpec.describe GameConsole do
+  before { @game_console = GameConsole.new(Codebreaker::CodebreakerGem.new) }
 
   it 'set usercode' do
     @game_console.user_code = '1234'

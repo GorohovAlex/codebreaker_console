@@ -1,4 +1,4 @@
-describe Statistic do
+RSpec.describe Statistic do
   before { @statistic = Statistic.new }
 
   it 'when statistic_get' do

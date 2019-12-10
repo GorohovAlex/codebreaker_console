@@ -3,8 +3,8 @@ class CodebreakerConsole < BaseClass
 
   def initialize
     @stage = :menu_select
-    @game_console = GameConsole.new
-    @codebreaker_gem = CodebreakerGem::CodebreakerGem.new
+    @codebreaker_gem = Codebreaker::CodebreakerGem.new
+    @game_console = GameConsole.new(@codebreaker_gem)
     @statistic = Statistic.new
     @menu = Menu.new
   end
@@ -36,18 +36,9 @@ class CodebreakerConsole < BaseClass
     @statistic.save
   end
 
-  private
-
-  def menu_select
-    print @menu.menu_to_s
-    item = CodebreakerConsole.input
-
-    menu_response = @menu.change(item)
-    menu_response[:status] ? stage_set(menu_response[:value]) : fail_menu_message
-  end
-
-  def stage_set(stage)
-    send(stage) if CONSOLE_STAGE_LIST.include?(stage.to_s)
+  def self.goodbye
+    print I18n.t('goodbye_message')
+    exit
   end
 
   def self.input
@@ -56,15 +47,23 @@ class CodebreakerConsole < BaseClass
     value
   end
 
+  private
+
+  def menu_select
+    print @menu.menu_to_s
+    item = CodebreakerConsole.input
+    menu_response = @menu.change(item)
+    menu_response[:status] ? stage_set(menu_response[:value]) : fail_menu_message
+  end
+
+  def stage_set(stage)
+    send(stage) if CONSOLE_STAGE_LIST.include?(stage.to_s)
+  end
+
   def fail_menu_message
     system('clear')
     puts I18n.t('fail_menu_message').light_red
     menu_select
-  end
-
-  def self.goodbye
-    print I18n.t('goodbye_message')
-    exit
   end
 
   def rules
@@ -74,7 +73,15 @@ class CodebreakerConsole < BaseClass
   end
 
   def start
-    @user.nil? ? registration : game_start
+    system('clear')
+    puts I18n.t('game_registration')
+    print I18n.t('input_username')
+
+    result = @codebreaker_gem.registration(CodebreakerConsole.input)
+    result[:status] ? @username = result[:value] : registration
+
+    @game_console.difficulty_select
+    game_start
   end
 
   def game_start
@@ -91,26 +98,5 @@ class CodebreakerConsole < BaseClass
     end
 
     stage_set(:menu_select)
-  end
-
-  def registration
-    system('clear')
-    puts I18n.t('game_registration')
-    username_input
-    @codebreaker_gem.registration(@user.username)
-    difficulty_change
-    game_start
-  end
-
-  def username_input
-    print I18n.t('input_username')
-    @user = User.new(CodebreakerConsole.input)
-    username_input unless @user.valide?
-  end
-
-  def difficulty_change
-    print format(I18n.t('difficulty_change'), @codebreaker_gem.difficulty.map(&:name).join(', '))
-    @game_console.difficulty_change = CodebreakerConsole.input
-    difficulty_change if @game_console.difficulty_change.nil?
   end
 end
