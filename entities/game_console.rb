@@ -1,6 +1,5 @@
 class GameConsole < BaseClass
-  attr_reader :user_code
-attr_accessor :difficulty_change
+  attr_reader :user_code, :difficulty_change
 
   VALIDE_CODE_LENGTH = 4
   VALIDE_CODE_NUMBERS = (1..6).freeze
@@ -42,8 +41,9 @@ attr_accessor :difficulty_change
   end
 
   def send_user_code
-    puts @user_code.inspect
     @game_gem.user_code = @user_code
+    puts I18n.t(@game_gem.errors[:user_code]) unless @game_gem.valide?
+
     @game_stage = @game_gem.game_step
     puts I18n.t('compare_result') % compare_result(@game_stage.compare_result)
     @game_stage.endgame
