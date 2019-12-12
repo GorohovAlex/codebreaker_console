@@ -63,10 +63,10 @@ workflows:
       - lintering:
           filters:
             branches:
-              only: develop
+              only: div
       - run_specs:
           filters:
             branches:
-              only: develop
+              only: div
           requires:
             - lintering
