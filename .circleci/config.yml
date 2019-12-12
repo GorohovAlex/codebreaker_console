@@ -8,6 +8,7 @@ jobs:
     branches:
       only:
         - develop
+        - /feature-.*/
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
     steps: 
