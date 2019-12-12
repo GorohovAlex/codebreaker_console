@@ -1,6 +1,7 @@
 RSpec.describe CodebreakerConsole do
   let(:current_subject) { described_class.new }
 
+  STATS_EMPTY_TABLE = 'Rating.+Name.+Difficulty.+Attempts Total.+Attempts Used.+Hints Total.+Hints Used'.freeze
   it 'generate_number return Array' do
     expect(current_subject).to be_a(CodebreakerConsole)
   end
@@ -26,12 +27,11 @@ RSpec.describe CodebreakerConsole do
     end
   end
 
-  context 'user_code' do
-    it 'input not valid code' do
-      commands = %w[start smile Hell 123]
-      allow(CodebreakerConsole).to receive_message_chain(:gets, :chomp).and_return(*commands)
-      expect(current_subject).to receive(:game_end).with(false)
-      current_subject.run
+  context 'statistic' do
+    it 'statistic show' do
+      allow(CodebreakerConsole).to receive_message_chain(:gets, :chomp) { 'stats' }
+      allow(current_subject).to receive(:menu_select)
+      expect { current_subject.stats }.to output(/#{STATS_EMPTY_TABLE}/).to_stdout
     end
   end
 

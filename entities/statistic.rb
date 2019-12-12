@@ -25,15 +25,18 @@ class Statistic
                           hints_used: game_stage.hint_used }
   end
 
-  private
-
-  def statistic_load
-    @statistic_items = YamlFile.load(STAT_FILE_PATH)
-  end
-
   def statistic_save
     YamlFile.save(STAT_FILE_PATH, @statistic_items)
   end
+
+  private
+
+  def statistic_load
+    return unless File.file?(STAT_FILE_PATH) && File.size(STAT_FILE_PATH).positive?
+
+    @statistic_items = YamlFile.load(STAT_FILE_PATH)
+  end
+
 
   def statistic_sort
     @statistic_items.sort_by! do |stat|

@@ -1,4 +1,4 @@
-class CodebreakerConsole < BaseClass
+class CodebreakerConsole
   CONSOLE_STAGE_LIST = %w[welcome start start_game menu_select rules stats].freeze
 
   def initialize
@@ -29,11 +29,11 @@ class CodebreakerConsole < BaseClass
 
   def statistic_save
     print I18n.t('statistic_save_question')
-    return unless input == 'y'
+    return unless CodebreakerConsole.input == 'y'
 
-    @statistic.statistic_add_item(name: @codebreaker_gem.username, difficulty: @codebreaker_gem.difficulty_change,
+    @statistic.statistic_add_item(name: @codebreaker_gem.user.username, difficulty: @codebreaker_gem.difficulty_change,
                                   game_stage: @codebreaker_gem.game_stage)
-    @statistic.save
+    @statistic.statistic_save
   end
 
   def self.goodbye

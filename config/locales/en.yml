@@ -46,3 +46,4 @@ en:
   about_hint_message: "Enter your answer or 'hint' to get a hint"
   step_message: '[%d/%d]: '
   compare_result: 'compare result: %s'
+  error_code_length: 'error_code_length'
