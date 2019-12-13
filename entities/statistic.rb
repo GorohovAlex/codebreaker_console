@@ -37,7 +37,6 @@ class Statistic
     @statistic_items = YamlFile.load(STAT_FILE_PATH)
   end
 
-
   def statistic_sort
     @statistic_items.sort_by! do |stat|
       [stat[:attempts_total] + stat[:hints_total],

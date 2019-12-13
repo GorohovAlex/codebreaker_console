@@ -43,8 +43,14 @@ class CodebreakerConsole
 
   def self.input
     value = gets.chomp
-    self.goodbye if value == 'exit'
+    goodbye if value == 'exit'
     value
+  end
+
+  def rules
+    system('clear')
+    print I18n.t('rules_message')
+    menu_select
   end
 
   private
@@ -63,12 +69,6 @@ class CodebreakerConsole
   def fail_menu_message
     system('clear')
     puts I18n.t('fail_menu_message').light_red
-    menu_select
-  end
-
-  def rules
-    system('clear')
-    print I18n.t('rules_message')
     menu_select
   end
 

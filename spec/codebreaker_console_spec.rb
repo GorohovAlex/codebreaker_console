@@ -27,6 +27,14 @@ RSpec.describe CodebreakerConsole do
     end
   end
 
+  context 'rules' do
+    it 'show rules' do
+      allow(CodebreakerConsole).to receive_message_chain(:gets, :chomp) { 'rules' }
+      allow(current_subject).to receive(:menu_select)
+      expect { current_subject.rules }.to output(/Codebreaker is a logic game in which a code-breaker/).to_stdout
+    end
+  end
+
   context 'statistic' do
     it 'statistic show' do
       allow(CodebreakerConsole).to receive_message_chain(:gets, :chomp) { 'stats' }
@@ -41,6 +49,8 @@ RSpec.describe CodebreakerConsole do
       allow(CodebreakerConsole).to receive_message_chain(:gets, :chomp).and_return(*commands)
     end
 
+    after { current_subject.run }
+
     context 'when play game' do
       it 'lose endgame' do
         expect(current_subject).to receive(:game_end).with(false)
@@ -51,10 +61,6 @@ RSpec.describe CodebreakerConsole do
         allow(game).to receive(:start).and_return(true)
         expect(current_subject).to receive(:game_end).with(true)
       end
-
-      after { current_subject.run }
     end
   end
-
-
 end
