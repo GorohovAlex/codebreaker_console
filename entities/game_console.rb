@@ -1,4 +1,6 @@
-class GameConsole < BaseClass
+class GameConsole
+  include Validator
+
   attr_reader :user_code, :difficulty_change
 
   VALIDE_CODE_LENGTH = 4
@@ -16,7 +18,6 @@ class GameConsole < BaseClass
 
   def start
     @game_stage = @game_gem.game_start
-    puts I18n.t('attempts_count') % @game_stage.attempts
     puts I18n.t('about_hint_message')
     next_step
     @game_stage.win
@@ -47,7 +48,7 @@ class GameConsole < BaseClass
       puts I18n.t(@game_gem.errors[:user_code])
       return false
     end
-    
+
     puts I18n.t('compare_result') % compare_result(compare_result)
     @game_stage.endgame
   end

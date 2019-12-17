@@ -14,8 +14,6 @@ RSpec.describe CodebreakerConsole do
 
     it 'start game input start' do
       allow(described_class).to receive_message_chain(:gets, :chomp) { 'start' }
-      # thing = Thing.new(chomp: 'start')
-      # allow(described_class).to receive(gets: thing)
       expect(current_subject).to receive(:start)
     end
 
@@ -30,7 +28,7 @@ RSpec.describe CodebreakerConsole do
     end
   end
 
-  context 'rules' do
+  context 'when show rules' do
     it 'show rules' do
       allow(described_class).to receive_message_chain(:gets, :chomp) { 'rules' }
       allow(current_subject).to receive(:menu_select)
