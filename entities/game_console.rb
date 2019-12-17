@@ -42,13 +42,13 @@ class GameConsole < BaseClass
   end
 
   def send_user_code
-    @game_gem.user_code = @user_code.chars
-    unless @game_gem.valid?
+    compare_result = @game_gem.game_step(user_code.chars)
+    unless compare_result
       puts I18n.t(@game_gem.errors[:user_code])
       return false
     end
-    @game_stage = @game_gem.game_step
-    puts I18n.t('compare_result') % compare_result(@game_stage.compare_result)
+    
+    puts I18n.t('compare_result') % compare_result(compare_result)
     @game_stage.endgame
   end
 
