@@ -3,9 +3,6 @@ class GameConsole
 
   attr_reader :user_code, :difficulty_change
 
-  VALIDE_CODE_LENGTH = 4
-  VALIDE_CODE_NUMBERS = (1..6).freeze
-
   def initialize(codebreaker_gem)
     @game_gem = codebreaker_gem
   end
@@ -26,11 +23,7 @@ class GameConsole
   def user_code=(code_new)
     return unless validate_length?(code_new, VALIDE_CODE_LENGTH..VALIDE_CODE_LENGTH)
 
-    unless code_new.split('').all? { |val| validate_number?(val) && validate_number_range?(val, VALIDE_CODE_NUMBERS) }
-      return
-    end
-
-    @user_code = code_new.chars.map(&:to_i)
+    @user_code = code_new.chars
   end
 
   private

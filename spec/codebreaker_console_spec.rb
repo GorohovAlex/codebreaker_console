@@ -7,6 +7,25 @@ RSpec.describe CodebreakerConsole do
     expect(current_subject).to be_a(described_class)
   end
 
+  context 'when create user' do
+    it 'input username empty' do
+      allow(current_subject).to receive_message_chain(:run)
+      expect { current_subject.send(:start) }.to output(/111/).to_stdout
+    end
+  end
+
+  context 'when hint show' do
+    before do
+      # commands = %w[start smile Hell hint]
+      # allow(described_class).to receive_message_chain(:gets, :chomp).and_return(*commands)
+    end
+
+    it 'hint show success' do
+      # allow(current_subject).to receive(:menu_select)
+      # expect { current_subject.game_console.hint_show }.to output(/You lose.../).to_stdout
+    end
+  end
+
   context 'when calling method' do
     after do
       current_subject.run
@@ -32,7 +51,7 @@ RSpec.describe CodebreakerConsole do
     it 'show rules' do
       allow(described_class).to receive_message_chain(:gets, :chomp) { 'rules' }
       allow(current_subject).to receive(:menu_select)
-      expect { current_subject.rules }.to output(/Codebreaker is a logic game in which a code-breaker/).to_stdout
+      expect { current_subject.send(:rules) }.to output(/Codebreaker is a logic game in which a code-breaker/).to_stdout
     end
   end
 
@@ -40,7 +59,7 @@ RSpec.describe CodebreakerConsole do
     it 'statistic show' do
       allow(described_class).to receive_message_chain(:gets, :chomp) { 'stats' }
       allow(current_subject).to receive(:menu_select)
-      expect { current_subject.stats }.to output(/#{STATS_EMPTY_TABLE}/).to_stdout
+      expect { current_subject.send(:stats) }.to output(/#{STATS_EMPTY_TABLE}/).to_stdout
     end
   end
 
@@ -57,10 +76,20 @@ RSpec.describe CodebreakerConsole do
         expect(current_subject).to receive(:game_end).with(false)
       end
 
+      it 'show message lose endgame' do
+        allow(current_subject).to receive(:menu_select)
+        expect { current_subject.send(:game_end, false) }.to output(/You lose.../).to_stdout
+      end
+
       it 'win endgame' do
         game = current_subject.instance_variable_get(:@game_console)
         allow(game).to receive(:start).and_return(true)
         expect(current_subject).to receive(:game_end).with(true)
+      end
+
+      it 'show message win endgame' do
+        allow(current_subject).to receive(:menu_select)
+        expect { current_subject.send(:game_end, true) }.to output(/Congrats!! You win!!/).to_stdout
       end
     end
   end

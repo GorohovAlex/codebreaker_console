@@ -5,7 +5,6 @@ class CodebreakerConsole
     @stage = :menu_select
     @codebreaker_gem = Codebreaker::CodebreakerGem.new
     @game_console = GameConsole.new(@codebreaker_gem)
-    @statistic = Statistic.new
     @menu = Menu.new
   end
 
@@ -14,6 +13,8 @@ class CodebreakerConsole
     stage_set(@stage)
   end
 
+  private
+
   def welcome
     system('clear')
     puts I18n.t('introduction_message').light_white
@@ -21,8 +22,8 @@ class CodebreakerConsole
 
   def stats
     system('clear')
-    headings = @statistic.headings.map { |value| I18n.t(value) }
-    rows = @statistic.statistic_get
+    headings = @codebreaker_gem.statistic.headings.map { |value| I18n.t(value) }
+    rows = @codebreaker_gem.statistic.statistic_get
     puts Terminal::Table.new(headings: headings, rows: rows)
     stage_set(:menu_select)
   end
@@ -31,9 +32,7 @@ class CodebreakerConsole
     print I18n.t('statistic_save_question')
     return unless CodebreakerConsole.input == 'y'
 
-    @statistic.statistic_add_item(name: @codebreaker_gem.user.username, difficulty: @codebreaker_gem.difficulty_change,
-                                  game_stage: @codebreaker_gem.game_stage)
-    @statistic.statistic_save
+    @codebreaker_gem.statistic_save
   end
 
   def self.goodbye
@@ -52,8 +51,6 @@ class CodebreakerConsole
     print I18n.t('rules_message')
     menu_select
   end
-
-  private
 
   def menu_select
     print @menu.menu_to_s
@@ -75,13 +72,21 @@ class CodebreakerConsole
   def start
     system('clear')
     puts I18n.t('game_registration')
-    print I18n.t('input_username')
-
-    result = @codebreaker_gem.registration(CodebreakerConsole.input)
-    result[:status] ? @username = result[:value] : registration
-
+    input_username
     @game_console.difficulty_select
     game_start
+  end
+
+  def input_username
+    print I18n.t('input_username')
+    result = @codebreaker_gem.registration(CodebreakerConsole.input)
+    if result[:status] 
+      @username = result[:value]
+    else
+      system('clear')
+      puts I18n.t(result[:value])
+      input_username
+    end
   end
 
   def game_start
