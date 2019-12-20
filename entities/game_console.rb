@@ -1,7 +1,5 @@
 class GameConsole
-  include Validator
-
-  attr_reader :user_code, :difficulty_change
+  attr_reader :user_code
 
   def initialize(codebreaker_gem)
     @game_gem = codebreaker_gem
@@ -9,8 +7,7 @@ class GameConsole
 
   def difficulty_select
     print format(I18n.t('difficulty_change'), @game_gem.difficulty.map(&:name).join(', '))
-    @difficulty_change = CodebreakerConsole.input
-    @game_gem.difficulty_change = @difficulty_change
+    @game_gem.difficulty_change = CodebreakerConsole.input
   end
 
   def start
@@ -18,12 +15,6 @@ class GameConsole
     puts I18n.t('about_hint_message')
     next_step
     @game_stage.win
-  end
-
-  def user_code=(code_new)
-    return unless validate_length?(code_new, VALIDE_CODE_LENGTH..VALIDE_CODE_LENGTH)
-
-    @user_code = code_new.chars
   end
 
   private
@@ -39,10 +30,10 @@ class GameConsole
     compare_result = @game_gem.game_step(user_code.chars)
     unless compare_result
       puts I18n.t(@game_gem.errors[:user_code])
-      return false
+      false
     end
 
-    puts I18n.t('compare_result') % compare_result(compare_result)
+    puts I18n.t('compare_result') % result_format(compare_result)
     @game_stage.endgame
   end
 
@@ -55,7 +46,7 @@ class GameConsole
     end
   end
 
-  def compare_result(result)
+  def result_format(result)
     result.map { |value| value ? SYMBOL_GUESS : SYMBOL_NOT_GUESS }.join
   end
 end

@@ -1,8 +1,20 @@
 RSpec.describe GameConsole do
-  let(:game_console) { described_class.new(Codebreaker::CodebreakerGem.new) }
+  let(:current_subject) { described_class.new(Codebreaker::CodebreakerGem.new) }
+  let(:game_gem) { instance_double('Codebreaker::CodebreakerGem') }
+  let(:hint_number) { '0' }
 
-  it 'set usercode' do
-    # game_console.user_code = '1234'
-    # expect(game_console.user_code).to eq(['1', '2', '3', '4'])
+  context 'when show hint' do
+    it 'show hint success' do
+      allow(game_gem).to receive(:hint_show).and_return(hint_number)
+      current_subject.instance_variable_set(:@game_gem, game_gem)
+      expect { current_subject.send(:hint_show) }.to output("The secret number contains #{hint_number}\n").to_stdout
+    end
+
+    it 'show hint ended' do
+      hint_number = nil
+      allow(game_gem).to receive(:hint_show).and_return(hint_number)
+      current_subject.instance_variable_set(:@game_gem, game_gem)
+      expect { current_subject.send(:hint_show) }.to output("No more hints left\n").to_stdout
+    end
   end
 end

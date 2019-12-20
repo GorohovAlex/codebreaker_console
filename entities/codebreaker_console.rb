@@ -13,15 +13,23 @@ class CodebreakerConsole
     stage_set(@stage)
   end
 
+  def self.goodbye
+    print I18n.t('goodbye_message')
+    exit
+  end
+
+  def self.input
+    value = gets.chomp
+    value == 'exit' ? goodbye : value
+  end
+
   private
 
   def welcome
-    system('clear')
     puts I18n.t('introduction_message').light_white
   end
 
   def stats
-    system('clear')
     headings = @codebreaker_gem.statistic.headings.map { |value| I18n.t(value) }
     rows = @codebreaker_gem.statistic.statistic_get
     puts Terminal::Table.new(headings: headings, rows: rows)
@@ -35,44 +43,30 @@ class CodebreakerConsole
     @codebreaker_gem.statistic_save
   end
 
-  def self.goodbye
-    print I18n.t('goodbye_message')
-    exit
-  end
-
-  def self.input
-    value = gets.chomp
-    goodbye if value == 'exit'
-    value
-  end
-
   def rules
-    system('clear')
     print I18n.t('rules_message')
     menu_select
   end
 
   def menu_select
     print @menu.menu_to_s
-    item = CodebreakerConsole.input
-    menu_response = @menu.change(item)
+    menu_response = @menu.change(CodebreakerConsole.input)
     menu_response[:status] ? stage_set(menu_response[:value]) : fail_menu_message
   end
 
   def stage_set(stage)
+    system('clear')
     send(stage) if CONSOLE_STAGE_LIST.include?(stage.to_s)
   end
 
   def fail_menu_message
-    system('clear')
     puts I18n.t('fail_menu_message').light_red
     menu_select
   end
 
   def start
-    system('clear')
     puts I18n.t('game_registration')
-    input_username
+    start unless input_username
     @game_console.difficulty_select
     game_start
   end
@@ -80,18 +74,17 @@ class CodebreakerConsole
   def input_username
     print I18n.t('input_username')
     result = @codebreaker_gem.registration(CodebreakerConsole.input)
-    if result[:status] 
+    if result[:status]
       @username = result[:value]
     else
-      system('clear')
       puts I18n.t(result[:value])
-      input_username
     end
+
+    result[:status]
   end
 
   def game_start
-    win = @game_console.start
-    game_end(win)
+    game_end(@game_console.start)
   end
 
   def game_end(win)

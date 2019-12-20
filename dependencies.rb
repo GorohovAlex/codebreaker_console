@@ -6,7 +6,7 @@ require 'pry'
 
 require_relative 'config/config.rb'
 
-require_relative 'modules/validator'
+# require_relative 'modules/validator'
 
 require_relative 'entities/menu.rb'
 require_relative 'entities/game_console.rb'
