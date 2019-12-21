@@ -1,6 +1,3 @@
-SYMBOL_GUESS = '+'.freeze
-SYMBOL_NOT_GUESS = '-'.freeze
-
 HINT_COMMAND = 'hint'.freeze
 
 I18n.load_path = Dir[File.join('config', 'locales', '*.{rb,yml}')]

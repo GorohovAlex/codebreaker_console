@@ -1,4 +1,7 @@
 class GameConsole
+  SYMBOL_GUESS = '+'.freeze
+  SYMBOL_NOT_GUESS = '-'.freeze
+
   def initialize(codebreaker_gem)
     @game_gem = codebreaker_gem
   end
