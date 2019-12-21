@@ -31,8 +31,8 @@ en:
   difficulty_easy: 'Easy'
   difficulty_medium: 'Medium'
   difficulty_hell: 'Hell'
-  win_message: "\nCongrats!! You win!!\n"
-  lose_message: "\nYou lose...\n"
+  win_message: 'Congrats!! You win!!'
+  lose_message: 'You lose...'
   rating: 'Rating'
   name: 'Name'
   difficulty: 'Difficulty'
@@ -40,7 +40,7 @@ en:
   attempts_used: 'Attempts Used'
   hints_total: 'Hints Total'
   hints_used: 'Hints Used'
-  error_name_length: "!!! Error name length !!!\n\n"
+  error_name_length: "!!! Error name length !!!"
   statistic_save_question: 'Do you want to save the result? [y/n]: '
   attempts_count: 'Attempts count: %d'
   about_hint_message: "Enter your answer or 'hint' to get a hint"

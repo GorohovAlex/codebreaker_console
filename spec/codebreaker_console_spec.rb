@@ -26,7 +26,8 @@ RSpec.describe CodebreakerConsole do
     it 'fail menu message' do
       allow(described_class).to receive_message_chain(:gets, :chomp) { 'ssss' }
       allow(current_subject).to receive(:menu_select)
-      expect { current_subject.send(:fail_menu_message, 'fail_menu_message') }.to output(/You have passed unexpected command. Please choose one from listed commands/).to_stdout
+      message = 'fail_menu_message'
+      expect { current_subject.send(:fail_menu_message, message) }.to output(/#{I18n.t(message)}/).to_stdout
     end
   end
 
@@ -34,7 +35,7 @@ RSpec.describe CodebreakerConsole do
     it 'show rules' do
       allow(described_class).to receive_message_chain(:gets, :chomp) { 'rules' }
       allow(current_subject).to receive(:menu_select)
-      expect { current_subject.send(:rules) }.to output(/Codebreaker is a logic game in which a code-breaker/).to_stdout
+      expect { current_subject.send(:rules) }.to output(I18n.t('rules_message')).to_stdout
     end
   end
 

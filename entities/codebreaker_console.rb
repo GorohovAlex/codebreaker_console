@@ -90,10 +90,10 @@ class CodebreakerConsole
 
   def game_end(win)
     if win
-      puts I18n.t('win_message')
+      puts "\n#{I18n.t('win_message')}\n"
       statistic_save
     else
-      puts I18n.t('lose_message')
+      puts "\n#{I18n.t('lose_message')}\n"
     end
 
     stage_set(:menu_select)

@@ -16,7 +16,7 @@ RSpec.describe CodebreakerConsole do
 
       it 'show message lose endgame' do
         allow(current_subject).to receive(:menu_select)
-        expect { current_subject.send(:game_end, false) }.to output(/You lose.../).to_stdout
+        expect { current_subject.send(:game_end, false) }.to output(/#{I18n.t('lose_message')}/).to_stdout
       end
 
       it 'win endgame' do
@@ -27,7 +27,7 @@ RSpec.describe CodebreakerConsole do
 
       it 'show message win endgame' do
         allow(current_subject).to receive(:menu_select)
-        expect { current_subject.send(:game_end, true) }.to output(/Congrats!! You win!!/).to_stdout
+        expect { current_subject.send(:game_end, true) }.to output(/#{I18n.t('win_message')}/).to_stdout
       end
     end
   end
