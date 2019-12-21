@@ -1,6 +1,4 @@
 class GameConsole
-  attr_reader :user_code
-
   def initialize(codebreaker_gem)
     @game_gem = codebreaker_gem
   end
@@ -21,12 +19,12 @@ class GameConsole
 
   def next_step
     print format(I18n.t('step_message'), @game_stage.step_number, @game_stage.attempts)
-    @user_code = CodebreakerConsole.input.strip
-    @user_code == HINT_COMMAND ? hint_show : (next_step unless send_user_code)
+    user_code = CodebreakerConsole.input.strip
+    user_code == HINT_COMMAND ? hint_show : (next_step unless send_user_code(user_code))
     next_step unless @game_stage.endgame
   end
 
-  def send_user_code
+  def send_user_code(user_code)
     compare_result = @game_gem.game_step(user_code.chars)
     unless compare_result
       puts I18n.t(@game_gem.errors[:user_code])
