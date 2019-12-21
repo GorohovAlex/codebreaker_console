@@ -6,6 +6,7 @@ gem 'codebreaker-ga', '~>0.2.5'
 gem 'colorize', '~> 0.8.1'
 gem 'fasterer', '~> 0.8.0'
 gem 'i18n', '~> 1.7.0'
+gem 'pry'
 gem 'rspec', '~> 3.9.0'
 gem 'rubocop', '~> 0.76.0', require: false
 gem 'rubocop-rspec'
