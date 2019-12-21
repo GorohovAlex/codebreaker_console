@@ -8,7 +8,7 @@ executors:
       - image: circleci/ruby:2.6.3-node
 
 caches: 
-  - &bundle_cache v2-repo-{{ checksum "Gemfile.lock" }}
+  - &bundle_cache v1-repo-{{ checksum "Gemfile.lock" }}
 
 commands:
   run_linters:
