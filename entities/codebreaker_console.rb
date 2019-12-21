@@ -1,6 +1,6 @@
 class CodebreakerConsole
   CONSOLE_STAGE_LIST = %w[welcome start start_game menu_select rules stats].freeze
-  COMMAND_YES = 'y'
+  COMMAND_YES = 'y'.freeze
 
   def initialize
     @stage = :menu_select

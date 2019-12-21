@@ -1,5 +1,5 @@
 class Menu
-  FAIL_MENU_MESSAGE = 'fail_menu_message'
+  FAIL_MENU_MESSAGE = 'fail_menu_message'.freeze
 
   def initialize
     @items = %w[start rules stats exit]
