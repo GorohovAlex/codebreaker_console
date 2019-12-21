@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.0)
+    codebreaker-ga (0.2.2)
     colorize (0.8.1)
     concurrent-ruby (1.1.5)
     diff-lcs (1.3)
@@ -56,6 +57,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  codebreaker-ga
   colorize (~> 0.8.1)
   fasterer (~> 0.8.0)
   i18n (~> 1.7.0)
