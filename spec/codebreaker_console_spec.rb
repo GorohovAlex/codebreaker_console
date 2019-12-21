@@ -26,7 +26,7 @@ RSpec.describe CodebreakerConsole do
     it 'fail menu message' do
       allow(described_class).to receive_message_chain(:gets, :chomp) { 'ssss' }
       allow(current_subject).to receive(:menu_select)
-      expect { current_subject.send(:fail_menu_message) }.to output(/You have passed unexpected command. Please choose one from listed commands/).to_stdout
+      expect { current_subject.send(:fail_menu_message, 'fail_menu_message') }.to output(/You have passed unexpected command. Please choose one from listed commands/).to_stdout
     end
   end
 

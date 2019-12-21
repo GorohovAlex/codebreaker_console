@@ -10,6 +10,6 @@ RSpec.describe Menu do
   end
 
   it 'when change error' do
-    expect(menu.change('start1111')).to eq(status: false, value: 'error')
+    expect(menu.change('start1111')).to eq(status: false, value: 'fail_menu_message')
   end
 end

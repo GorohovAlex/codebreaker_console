@@ -52,7 +52,7 @@ class CodebreakerConsole
   def menu_select
     print @menu.menu_to_s
     menu_response = @menu.change(CodebreakerConsole.input)
-    menu_response[:status] ? stage_set(menu_response[:value]) : fail_menu_message
+    menu_response[:status] ? stage_set(menu_response[:value]) : fail_menu_message(menu_response[:value])
   end
 
   def stage_set(stage)
@@ -60,8 +60,8 @@ class CodebreakerConsole
     send(stage) if CONSOLE_STAGE_LIST.include?(stage.to_s)
   end
 
-  def fail_menu_message
-    puts I18n.t('fail_menu_message').light_red
+  def fail_menu_message(message)
+    puts I18n.t(message).light_red
     menu_select
   end
 
