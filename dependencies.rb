@@ -2,6 +2,7 @@ require 'i18n'
 require 'colorize'
 require 'terminal-table'
 require 'codebreaker'
+require 'pry'
 
 require_relative 'config/config.rb'
 
