@@ -1,5 +1,6 @@
 class CodebreakerConsole
   CONSOLE_STAGE_LIST = %w[welcome start start_game menu_select rules stats].freeze
+  COMMAND_YES = 'y'
 
   def initialize
     @stage = :menu_select
@@ -38,7 +39,7 @@ class CodebreakerConsole
 
   def statistic_save
     print I18n.t('statistic_save_question')
-    return unless CodebreakerConsole.input == 'y'
+    return unless CodebreakerConsole.input == COMMAND_YES
 
     @codebreaker_gem.statistic_save
   end
