@@ -7,8 +7,8 @@ class GameConsole
   end
 
   def difficulty_select
-    print format(I18n.t('difficulty_change'), @game_gem.difficulty.map(&:name).join(', '))
-    @game_gem.difficulty_change = CodebreakerConsole.input
+    print format(I18n.t('difficulty_change'), @game_gem.difficulties.map(&:name).join(', '))
+    @game_gem.difficulty = CodebreakerConsole.input
   end
 
   def start

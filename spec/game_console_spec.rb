@@ -1,6 +1,6 @@
 RSpec.describe GameConsole do
-  let(:current_subject) { described_class.new(Codebreaker::CodebreakerGem.new) }
-  let(:game_gem) { instance_double('Codebreaker::CodebreakerGem') }
+  let(:current_subject) { described_class.new(Codebreaker::Game.new) }
+  let(:game_gem) { instance_double('Codebreaker::Game') }
   let(:hint_number) { '0' }
 
   context 'when show hint' do

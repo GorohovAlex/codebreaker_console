@@ -4,7 +4,7 @@ class CodebreakerConsole
 
   def initialize
     @stage = :menu_select
-    @codebreaker_gem = Codebreaker::CodebreakerGem.new
+    @codebreaker_gem = Codebreaker::Game.new
     @game_console = GameConsole.new(@codebreaker_gem)
     @menu = Menu.new
   end
@@ -31,6 +31,7 @@ class CodebreakerConsole
   end
 
   def stats
+    system('clear')
     headings = @codebreaker_gem.statistic.headings.map { |value| I18n.t(value) }
     rows = @codebreaker_gem.statistic.statistic_get
     puts Terminal::Table.new(headings: headings, rows: rows)
@@ -45,6 +46,7 @@ class CodebreakerConsole
   end
 
   def rules
+    system('clear')
     print I18n.t('rules_message')
     menu_select
   end
@@ -56,7 +58,6 @@ class CodebreakerConsole
   end
 
   def stage_set(stage)
-    system('clear')
     send(stage) if CONSOLE_STAGE_LIST.include?(stage.to_s)
   end
 
@@ -66,6 +67,7 @@ class CodebreakerConsole
   end
 
   def start
+    system('clear')
     puts I18n.t('game_registration')
     start unless input_username
     @game_console.difficulty_select
