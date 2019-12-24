@@ -1,13 +1,7 @@
 ---
-- :name: '123'
-  :difficulty: Easy
-  :attempts_total: 15
-  :attempts_used: 14
-  :hints_total: 2
-  :hints_used: 2
 - :name: sss
   :difficulty: Easy
   :attempts_total: 15
-  :attempts_used: 15
+  :attempts_used: 11
   :hints_total: 2
-  :hints_used: 2
+  :hints_used: 0

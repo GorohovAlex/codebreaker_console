@@ -10,26 +10,28 @@ class GameConsole
     print I18n.t('difficulty_change', difficulty: @game_gem.difficulties.map(&:name).join(', '))
     @game_gem.difficulty = CodebreakerConsole.input
 
-    return if @game_gem.valid?
+    return true if @game_gem.valid?
 
-    puts @game_gem.errors[:difficulty]
-    difficulty_select
+    puts I18n.t(@game_gem.errors[:difficulty])
+    false
   end
 
   def start
-    @game_stage = @game_gem.game_start
+    @game_gem.game_start
     puts I18n.t('about_hint_message')
     next_step
-    @game_stage.win
+    @game_gem.game_stage.win
   end
 
   private
 
   def next_step
-    print I18n.t('step_message', step_number: @game_stage.step_number, attempts: @game_stage.attempts)
+    game_stage = @game_gem.game_stage
+    print I18n.t('step_message', step_number: game_stage.step_number, attempts: game_stage.attempts)
     user_code = CodebreakerConsole.input.strip
-    user_code == HINT_COMMAND ? hint_show : (next_step unless send_user_code(user_code))
-    next_step unless @game_stage.endgame
+
+    hint_show if user_code == HINT_COMMAND
+    next_step unless send_user_code(user_code) || game_stage.endgame
   end
 
   def send_user_code(user_code)
@@ -40,7 +42,7 @@ class GameConsole
     end
 
     puts I18n.t('compare_result', result: result_format(compare_result))
-    @game_stage.endgame
+    @game_gem.game_stage.endgame
   end
 
   def hint_show

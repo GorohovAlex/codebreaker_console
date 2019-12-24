@@ -18,4 +18,11 @@ RSpec.describe GameConsole do
       expect { current_subject.send(:hint_show) }.to output(/#{I18n.t('no_hints')}/).to_stdout
     end
   end
+
+  context 'when select difficulty' do
+    it 'failed select' do
+      allow(CodebreakerConsole).to receive(:input).and_return('Hellll')
+      expect(current_subject.send(:difficulty_select)).to eq(false)
+    end
+  end
 end
