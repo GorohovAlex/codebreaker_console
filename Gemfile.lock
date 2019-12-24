@@ -62,7 +62,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  codebreaker-ga (~> 0.2.7)
+  codebreaker-ga (~> 0.2.8)
   colorize (~> 0.8.1)
   fasterer (~> 0.8.0)
   i18n (~> 1.7.0)
