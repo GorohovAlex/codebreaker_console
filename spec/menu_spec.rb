@@ -2,7 +2,7 @@ RSpec.describe Menu do
   let(:menu) { described_class.new }
 
   it 'when menu_to_s' do
-    expect(menu.menu_to_s).to eq(format(I18n.t('menu_message'), 'start, rules, stats, exit'))
+    expect(menu.menu_to_s).to eq(I18n.t('menu_message', menu_item: 'start, rules, stats, exit'))
   end
 
   it 'when change' do

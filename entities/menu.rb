@@ -6,7 +6,7 @@ class Menu
   end
 
   def menu_to_s
-    I18n.t('menu_message') % @items.join(', ')
+    I18n.t('menu_message', menu_item: @items.join(', '))
   end
 
   def change(item)

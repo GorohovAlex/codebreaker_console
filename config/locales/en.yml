@@ -1,6 +1,6 @@
 en:
   introduction_message: "Welcome to the game @CODEBREAKER\n\n"
-  menu_message: "Choose what you want to do [%s]: "
+  menu_message: "Choose what you want to do [%menu_item]: "
   fail_menu_message: "You have passed unexpected command. Please choose one from listed commands\n\n"
   goodbye_message: "\n\nGoodbye, we will be cry if you do not return again to us\n\n"
   rules_message: |
@@ -25,7 +25,7 @@ en:
                   Codebreaker also has some number of hints(depends on chosen difficulty). If a user takes a hint - he receives back a separate digit of the secret code.
   game_registration: 'Game registration'
   input_username: 'Input your username: '
-  difficulty_change: 'Choose difficulty level [%s]: '
+  difficulty_change: 'Choose difficulty level [%{difficulty}]: '
   show_hint: "The secret number contains %d"
   no_hints: 'No more hints left'
   difficulty_easy: 'Easy'
@@ -44,7 +44,7 @@ en:
   statistic_save_question: 'Do you want to save the result? [y/n]: '
   attempts_count: 'Attempts count: %d'
   about_hint_message: "Enter your answer or 'hint' to get a hint"
-  step_message: '[%d/%d]: '
-  compare_result: 'compare result: %s'
+  step_message: '[%{step_number}/%{attempts}]: '
+  compare_result: 'compare result: %{result}'
   error_user_code_length: 'error_code_length'
   error_user_code_number: 'error_user_code_number'

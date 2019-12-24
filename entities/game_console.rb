@@ -7,7 +7,7 @@ class GameConsole
   end
 
   def difficulty_select
-    print format(I18n.t('difficulty_change'), @game_gem.difficulties.map(&:name).join(', '))
+    print I18n.t('difficulty_change', difficulty: @game_gem.difficulties.map(&:name).join(', '))
     @game_gem.difficulty = CodebreakerConsole.input
   end
 
@@ -21,7 +21,7 @@ class GameConsole
   private
 
   def next_step
-    print format(I18n.t('step_message'), @game_stage.step_number, @game_stage.attempts)
+    print I18n.t('step_message', step_number: @game_stage.step_number, attempts: @game_stage.attempts)
     user_code = CodebreakerConsole.input.strip
     user_code == HINT_COMMAND ? hint_show : (next_step unless send_user_code(user_code))
     next_step unless @game_stage.endgame
@@ -34,7 +34,7 @@ class GameConsole
       false
     end
 
-    puts I18n.t('compare_result') % result_format(compare_result)
+    puts I18n.t('compare_result', result: result_format(compare_result))
     @game_stage.endgame
   end
 
