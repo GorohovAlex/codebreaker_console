@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.0)
-    codebreaker-ga (0.2.7)
+    codebreaker-ga (0.2.8)
     coderay (1.1.2)
     colorize (0.8.1)
     concurrent-ruby (1.1.5)
