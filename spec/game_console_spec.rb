@@ -7,7 +7,7 @@ RSpec.describe GameConsole do
     it 'show hint success' do
       allow(game_gem).to receive(:hint_show).and_return(hint_number)
       current_subject.instance_variable_set(:@game_gem, game_gem)
-      output_message = format(I18n.t('show_hint'), hint_number)
+      output_message = I18n.t('show_hint', hint: hint_number)
       expect { current_subject.send(:hint_show) }.to output(/#{output_message}/).to_stdout
     end
 

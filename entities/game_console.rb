@@ -43,7 +43,7 @@ class GameConsole
     if hint_code.nil?
       puts I18n.t('no_hints')
     else
-      puts format(I18n.t('show_hint'), hint_code)
+      puts I18n.t('show_hint', hint: hint_code)
     end
   end
 

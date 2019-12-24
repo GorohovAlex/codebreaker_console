@@ -26,7 +26,7 @@ en:
   game_registration: 'Game registration'
   input_username: 'Input your username: '
   difficulty_change: 'Choose difficulty level [%{difficulty}]: '
-  show_hint: "The secret number contains %d"
+  show_hint: "The secret number contains %{hint}"
   no_hints: 'No more hints left'
   difficulty_easy: 'Easy'
   difficulty_medium: 'Medium'
@@ -42,7 +42,6 @@ en:
   hints_used: 'Hints Used'
   error_name_length: "!!! Error name length !!!"
   statistic_save_question: 'Do you want to save the result? [y/n]: '
-  attempts_count: 'Attempts count: %d'
   about_hint_message: "Enter your answer or 'hint' to get a hint"
   step_message: '[%{step_number}/%{attempts}]: '
   compare_result: 'compare result: %{result}'
