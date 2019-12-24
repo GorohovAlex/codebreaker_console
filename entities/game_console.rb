@@ -9,6 +9,11 @@ class GameConsole
   def difficulty_select
     print I18n.t('difficulty_change', difficulty: @game_gem.difficulties.map(&:name).join(', '))
     @game_gem.difficulty = CodebreakerConsole.input
+
+    return if @game_gem.valid?
+
+    puts @game_gem.errors[:difficulty]
+    difficulty_select
   end
 
   def start
@@ -30,8 +35,8 @@ class GameConsole
   def send_user_code(user_code)
     compare_result = @game_gem.game_step(user_code.chars)
     unless compare_result
-      puts I18n.t(@game_gem.errors[:user_code])
-      false
+      puts I18n.t(@game_gem.errors[:match_code])
+      return false
     end
 
     puts I18n.t('compare_result', result: result_format(compare_result))

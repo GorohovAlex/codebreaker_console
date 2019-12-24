@@ -1,19 +1,13 @@
 ---
-- :name: smile
-  :difficulty: Hell
-  :attempts_total: 5
-  :attempts_used: 3
-  :hints_total: 1
-  :hints_used: 0
-- :name: '111'
+- :name: '123'
   :difficulty: Easy
-  :attempts_total: 10
-  :attempts_used: 1
+  :attempts_total: 15
+  :attempts_used: 14
   :hints_total: 2
-  :hints_used: 0
-- :name: '111'
+  :hints_used: 2
+- :name: sss
   :difficulty: Easy
-  :attempts_total: 10
-  :attempts_used: 1
+  :attempts_total: 15
+  :attempts_used: 15
   :hints_total: 2
-  :hints_used: 0
+  :hints_used: 2

@@ -45,5 +45,5 @@ en:
   about_hint_message: "Enter your answer or 'hint' to get a hint"
   step_message: '[%{step_number}/%{attempts}]: '
   compare_result: 'compare result: %{result}'
-  error_user_code_length: 'error_code_length'
-  error_user_code_number: 'error_user_code_number'
+  error_match_code_number: 'code must be between 1 and 6.'
+  error_match_code_length: 'code must be 4 characters long'

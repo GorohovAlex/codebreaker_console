@@ -67,7 +67,6 @@ class CodebreakerConsole
   end
 
   def start
-    system('clear')
     puts I18n.t('game_registration')
     start unless input_username
     @game_console.difficulty_select
