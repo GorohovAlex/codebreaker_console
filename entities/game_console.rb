@@ -10,8 +10,7 @@ class GameConsole
   def difficulty_select
     print I18n.t('difficulty_change', difficulty: @game_gem.difficulties.map(&:name).join(', '))
     @game_gem.difficulty = CodebreakerConsole.input
-
-    return true if @game_gem.valid?
+    return true if @game_gem.errors.empty?
 
     puts I18n.t(@game_gem.errors[:difficulty])
     false
