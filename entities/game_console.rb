@@ -31,7 +31,7 @@ class GameConsole
     user_code = CodebreakerConsole.input.strip
 
     hint_show if user_code == HINT_COMMAND
-    next_step unless send_user_code(user_code) || game_stage.endgame
+    next_step if !send_user_code(user_code) || !game_stage.endgame
   end
 
   def send_user_code(user_code)
@@ -42,7 +42,7 @@ class GameConsole
     end
 
     puts I18n.t('compare_result', result: result_format(compare_result))
-    @game_gem.game_stage.endgame
+    true
   end
 
   def hint_show
